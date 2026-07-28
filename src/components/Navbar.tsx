@@ -31,14 +31,15 @@ export function Navbar() {
           ))}
         </ul>
 
-        <Button
-          asChild
-          className="bg-[#5B8CFF] font-mono text-sm text-white hover:bg-[#5B8CFF]/90"
-        >
-          <a href="https://wa.me/+34604934086" target="_blank" rel="noopener noreferrer">
-            hablemos →
-          </a>
-        </Button>
+       <a
+  href="https://wa.me/34604934086"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <Button className="bg-[#5B8CFF] font-mono text-sm text-white hover:bg-[#5B8CFF]/90">
+    hablemos →
+  </Button>
+</a>
       </nav>
     </header>
   );
