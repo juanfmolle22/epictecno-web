@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const links = [
   { href: "/servicios", label: "servicios" },
@@ -13,10 +14,20 @@ export function Navbar() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-white/5 bg-[#0B0E14]/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-lg font-semibold tracking-tight">
-          epic<span className="text-[#5B8CFF]">tecno</span>
-          <span className="text-[#4ADE9C]">.</span>
-        </Link>
+       <Link href="/" className="flex items-center gap-2">
+  <Image
+  src="/logo_epictecno.png"
+  alt="EpicTecno"
+  width={160}
+  height={40}
+  priority
+  className="h-10 w-40"
+/>
+  <span className="font-display text-lg font-semibold tracking-tight">
+    epic<span className="text-[#5B8CFF]">tecno</span>
+    <span className="text-[#4ADE9C]">.</span>
+  </span>
+</Link>
 
         <ul className="hidden items-center gap-8 font-mono text-sm text-[#E4E7EC]/70 md:flex">
           {links.map((link) => (
