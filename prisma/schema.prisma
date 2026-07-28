@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nombre    String
+  createdAt DateTime @default(now())
+}
+
+model Proyecto {
+  id          String   @id @default(cuid())
+  titulo      String
+  descripcion String
+  imagenUrl   String?
+  tecnologias String[] // ej: ["Next.js", "Prisma", "PostgreSQL"]
+  urlDemo     String?
+  urlRepo     String?
+  destacado   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mensaje {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String
+  mensaje   String
+  leido     Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
