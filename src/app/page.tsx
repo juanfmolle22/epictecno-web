@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { CodeWindow } from "@/components/CodeWindow";
 import { buttonVariants } from "@/components/ui/button";
+import { Services } from "@/components/Services";
 
 export default function Home() {
   return (
@@ -52,6 +53,7 @@ export default function Home() {
 
         <CodeWindow />
       </main>
+       <Services />
     </>
   );
 }

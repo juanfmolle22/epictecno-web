@@ -30,7 +30,7 @@ export function CodeWindow() {
           proyecto.ts
         </span>
       </div>
-      <div className="space-y-1 p-5 font-mono text-sm">
+      <div className="h-[168px] space-y-1 p-5 font-mono text-sm">
         {lines.slice(0, visibleLines).map((line, i) => (
           <div key={i} className={line.color}>
             {line.text}
