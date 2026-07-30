@@ -8,11 +8,13 @@ datasource db {
 }
 
 model Usuario {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  nombre    String
-  createdAt DateTime @default(now())
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  password            String
+  nombre              String
+  resetToken          String?   @unique
+  resetTokenExpiry    DateTime?
+  createdAt           DateTime  @default(now())
 }
 
 model Proyecto {
