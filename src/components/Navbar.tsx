@@ -1,40 +1,45 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-
-const links = [
-  { href: "/servicios", label: "servicios" },
-  { href: "/portfolio", label: "portfolio" },
-  { href: "/contacto", label: "contacto" },
-];
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { NAV, wa } from "@/content/site";
 
 export function Navbar() {
-  return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/5 bg-[#0B0E14]/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-       <Link href="/" className="flex items-center gap-2">
-  <Image
-  src="/logo_epictecno.png"
-  alt="EpicTecno"
-  width={160}
-  height={40}
-  priority
-  className="h-10 w-40"
-/>
-  <span className="font-display text-lg font-semibold tracking-tight">
-    epic<span className="text-[#5B8CFF]">tecno</span>
-    <span className="text-[#4ADE9C]">.</span>
-  </span>
-</Link>
+  const pathname = usePathname();
+  const [abierto, setAbierto] = useState(false);
 
-        <ul className="hidden items-center gap-8 font-mono text-sm text-[#E4E7EC]/70 md:flex">
-          {links.map((link) => (
+  const activo = (href: string) =>
+    pathname === href ||
+    pathname.startsWith(`${href}/`) ||
+    (href === "/portfolio" && pathname.startsWith("/proyectos"));
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-bruma bg-papel/90 backdrop-blur-md">
+      <nav
+        aria-label="Principal"
+        className="contenedor flex h-[4.5rem] items-center justify-between gap-6"
+      >
+        <Link href="/" onClick={() => setAbierto(false)} className="shrink-0">
+          <Image
+            src="/logo_epictecno.png"
+            alt="Epictecno, desarrollo web"
+            width={566}
+            height={186}
+            priority
+            className="h-11 w-auto"
+          />
+        </Link>
+
+        <ul className="hidden items-center gap-1 lg:flex">
+          {NAV.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="transition-colors hover:text-[#5B8CFF]"
+                aria-current={activo(link.href) ? "page" : undefined}
+                className="rounded-full px-4 py-2 font-medium text-tinta transition-colors hover:bg-bruma aria-[current=page]:bg-tinta aria-[current=page]:text-white"
               >
                 {link.label}
               </Link>
@@ -42,16 +47,56 @@ export function Navbar() {
           ))}
         </ul>
 
-       <a
-  href="https://wa.me/34604934086"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <Button className="bg-[#5B8CFF] font-mono text-sm text-white hover:bg-[#5B8CFF]/90">
-    hablemos →
-  </Button>
-</a>
+        <div className="flex items-center gap-2">
+          <a
+            href={wa()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="boton hidden bg-cobalto text-white hover:bg-cobalto-oscuro sm:inline-flex"
+          >
+            Hablar por WhatsApp
+          </a>
+          <button
+            type="button"
+            onClick={() => setAbierto((v) => !v)}
+            aria-expanded={abierto}
+            aria-controls="menu-movil"
+            className="grid size-12 place-items-center rounded-full border border-bruma bg-white lg:hidden"
+          >
+            {abierto ? <X className="size-5" /> : <Menu className="size-5" />}
+            <span className="sr-only">{abierto ? "Cerrar menú" : "Abrir menú"}</span>
+          </button>
+        </div>
       </nav>
+
+      {abierto && (
+        <div id="menu-movil" className="border-t border-bruma bg-papel lg:hidden">
+          <ul className="contenedor flex flex-col py-4">
+            {NAV.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setAbierto(false)}
+                  aria-current={activo(link.href) ? "page" : undefined}
+                  className="block border-b border-bruma py-4 font-display text-2xl font-semibold aria-[current=page]:text-cobalto"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li className="pt-5">
+              <a
+                href={wa()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="boton w-full bg-cobalto text-white"
+              >
+                Hablar por WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 }

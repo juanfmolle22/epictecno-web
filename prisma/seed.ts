@@ -7,6 +7,11 @@ async function main() {
   const email = "tu-email@ejemplo.com"; // 👈 cambia esto por tu email real
   const nombre = "Juan"; // 👈 tu nombre
 
+  const passwordPlano = process.env.ADMIN_PASSWORD;
+  if (!passwordPlano) {
+    throw new Error("Define ADMIN_PASSWORD antes de ejecutar el seed.");
+  }
+
   const passwordHasheada = await hash(passwordPlano, 10);
 
   const usuario = await prisma.usuario.upsert({
