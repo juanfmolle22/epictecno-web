@@ -8,7 +8,7 @@ export function Footer() {
       <div className="contenedor grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Image
-            src="/logo_epictecno.png"
+            src="/epictecno-logo.png"
             alt="Epictecno"
             width={566}
             height={186}

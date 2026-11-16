@@ -24,7 +24,7 @@ export function Navbar() {
       >
         <Link href="/" onClick={() => setAbierto(false)} className="shrink-0">
           <Image
-            src="/logo_epictecno.png"
+            src="/epictecno-logo.png"
             alt="Epictecno, desarrollo web"
             width={566}
             height={186}

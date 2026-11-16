@@ -1,0 +1,34 @@
+name: Imágenes del portafolio
+
+# Descarga las capturas del portafolio antiguo, las optimiza con nombres
+# epictecno-<proyecto>-*.webp y las guarda en el repositorio.
+on:
+  workflow_dispatch:
+  push:
+    branches: [rediseno-2026]
+    paths:
+      - prisma/proyectos-iniciales.json
+      - scripts/descargar-imagenes.mjs
+      - .github/workflows/imagenes-portafolio.yml
+
+permissions:
+  contents: write
+
+jobs:
+  descargar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save --ignore-scripts --no-audit --no-fund sharp
+      - run: node scripts/descargar-imagenes.mjs
+      - name: Guardar imágenes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/proyectos
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: imágenes optimizadas del portafolio"
+          git push

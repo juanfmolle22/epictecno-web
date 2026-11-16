@@ -8,26 +8,35 @@ datasource db {
 }
 
 model Usuario {
-  id                  String    @id @default(cuid())
-  email               String    @unique
-  password            String
-  nombre              String
-  resetToken          String?   @unique
-  resetTokenExpiry    DateTime?
-  createdAt           DateTime  @default(now())
+  id               String    @id @default(cuid())
+  email            String    @unique
+  password         String
+  nombre           String
+  resetToken       String?   @unique // se guarda el hash SHA-256, nunca el token
+  resetTokenExpiry DateTime?
+  intentosFallidos Int       @default(0)
+  bloqueadoHasta   DateTime?
+  createdAt        DateTime  @default(now())
 }
 
 model Proyecto {
-  id          String   @id @default(cuid())
-  titulo      String
-  descripcion String
-  imagenUrl   String?
-  tecnologias String[] // ej: ["Next.js", "Prisma", "PostgreSQL"]
-  urlDemo     String?
-  urlRepo     String?
-  destacado   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  titulo            String
+  categoria         String   @default("web") // tienda | web | sistema | integracion | mejora
+  sector            String   @default("")
+  resumen           String   @default("") // texto corto: tarjeta y meta description
+  descripcion       String
+  imagenUrl         String? // portada 4:3
+  imagenCompletaUrl String? // captura de página completa
+  tecnologias       String[] // ej: ["Next.js", "Prisma", "PostgreSQL"]
+  urlDemo           String?
+  urlRepo           String?
+  destacado         Boolean  @default(false)
+  publicado         Boolean  @default(true)
+  orden             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Mensaje {
